@@ -50,7 +50,8 @@ public class Clean extends JPanel implements ActionListener {
 	static String idDoc = null;;	
 	
 	static List <String> folderIds = new ArrayList<String>();
-	static String[] listaEdicoes = new String[50];
+	static String[] listaEdicoes = new String[55];
+    static String[] listData = new String[55];
 	
 	static Session sessao;
 
@@ -76,7 +77,6 @@ public class Clean extends JPanel implements ActionListener {
     static JTable table;
     static String newline = "\n";
     static ListSelectionModel listSelectionModel;
-    static String[] listData = new String[7];
     
     private JTextField entry;
     
