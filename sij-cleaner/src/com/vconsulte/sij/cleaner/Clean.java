@@ -38,8 +38,8 @@ public class Clean extends JPanel implements ActionListener {
 	public static String usuario = "sgj";
     public static String password = "934769386";
 
-    public static String url = "http://192.168.1.30:8080";
-//    public static String url = "http://127.0.0.1:8080";
+//    public static String url = "http://192.168.1.30:8080";
+    public static String url = "http://127.0.0.1:8080";
     public static String baseFolder = "/Sites/advocacia/documentLibrary/Secretaria/Publicacoes";
 	
 	static InterfaceServidor conexao = new InterfaceServidor();
@@ -254,7 +254,7 @@ public class Clean extends JPanel implements ActionListener {
 
 		for (int x=0; x<=40000; x++) {
 
-			queryString = "select cmis:objectId from sij:edital where in_folder('" + pastaId + "')";		
+			queryString = "select cmis:objectId from sij:documento where in_folder('" + pastaId + "')";		
 			ItemIterable<QueryResult> results = sessao.query(queryString, false);
 			
 			// delete each result    	
