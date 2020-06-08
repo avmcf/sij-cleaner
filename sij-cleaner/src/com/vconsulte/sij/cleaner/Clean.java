@@ -4,11 +4,14 @@ package com.vconsulte.sij.cleaner;
 //Cleaner: Rotina de exclusão de publicações do diario oficial 	
 //
 //
-//versao 1.0.0 	- 23 de Novembro de 2018
-//				Versao Inicial
+//	versao 1.0.0 	- 23 de Novembro de 2018
+//					Versao Inicial
 //
-//versao 1.0.1 	- 17 de Dezembro de 2018
-//				Correção na finalização da rotina e exclusão da pasta da edicao selecionada
+//	versao 1.0.1 	- 17 de Dezembro de 2018
+//					Correção na finalização da rotina e exclusão da pasta da edicao selecionada
+//
+//	versao 1.1.0 	- 11 de Maio de 2020
+//					Centralização da configuração 
 //
 //---------------------------------------------------------------------------------------------------------------------------
 //
@@ -24,6 +27,8 @@ import javax.swing.event.*;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
@@ -31,18 +36,19 @@ import org.apache.chemistry.opencmis.client.api.QueryResult;
 import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.commons.data.PropertyData;
 
-import com.vconsulte.sij.base.InterfaceServidor;   
+import com.vconsulte.sij.base.*;   
 
 public class Clean extends JPanel implements ActionListener {
-	
-	public static String usuario = "sgj";
-    public static String password = "934769386";
 
- //   public static String url = "http://192.168.1.30:8080";
-    public static String url = "http://127.0.0.1:8080";
-//    public static String url = "http://192.168.25.1:8080";
-    public static String baseFolder = "/Sites/advocacia/documentLibrary/Secretaria/Publicacoes";
-	
+	static String usuario = com.vconsulte.sij.base.Parametros.USUARIO;
+	static String password = com.vconsulte.sij.base.Parametros.PASSWORD;
+	static String baseFolder = com.vconsulte.sij.base.Parametros.BASEFOLDER;  
+	static String cliente;
+	static String tipoSaida;
+	static String sysOp;
+	static String url;
+	static String logFolder;
+   
 	static InterfaceServidor conexao = new InterfaceServidor();
 	
 	static JFrame frame = new JFrame("Limpeza de Editais");
@@ -130,7 +136,15 @@ public class Clean extends JPanel implements ActionListener {
         splitPane.add(bottomHalf);
     }
     
-    public static void main(String[] args){   
+    public static void main(String[] args) throws Exception{
+    	File dir1 = new File (".");
+    	File config = new File(dir1.getCanonicalPath() + "/split.cnf");
+    	com.vconsulte.sij.base.Configuracao.carregaConfig(config);
+		cliente = com.vconsulte.sij.base.Parametros.CLIENTE;
+		tipoSaida = com.vconsulte.sij.base.Parametros.TIPOSAIDA;
+		sysOp = com.vconsulte.sij.base.Parametros.SYSOP;
+		url = com.vconsulte.sij.base.Parametros.URL;
+		logFolder = com.vconsulte.sij.base.Parametros.LOGFOLDER;
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
         		if (!conectaServidor()) {
